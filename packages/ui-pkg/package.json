@@ -1,0 +1,83 @@
+{
+  "name": "@danialdinh/test-ui-pkg",
+  "description": "Test UI Package",
+  "version": "0.0.0",
+  "author": "danialdinh957",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danialdinh957/workspace-build-cicd"
+  },
+  "bugs": {
+    "url": "https://github.com/danialdinh957/workspace-build-cicd/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "dist/style.css"
+  ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "src/index"
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "typesVersions": {
+      "*": {
+        "index": [
+          "dist/esm/index.d.ts"
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "clean": "rimraf .turbo",
+    "build:esm": "swc src -d dist/esm -D --ignore src/css --strip-leading-paths --config-file ./.swcrc.esm.json",
+    "build:cjs": "swc src -d dist/cjs -D --ignore src/css --strip-leading-paths --config-file ./.swcrc.cjs.json",
+    "build:types-esm": "tsc --emitDeclarationOnly --noCheck --outDir dist/esm",
+    "build:types-cjs": "tsc --emitDeclarationOnly --noCheck --outDir dist/cjs",
+    "build:alias-esm": "tsc-alias --outDir dist/esm",
+    "build:alias-cjs": "tsc-alias --outDir dist/cjs",
+    "build:style": "tailwindcss -i ./src/css/tailwind.css -o ./dist/style.css",
+    "build": "pnpm run \"/^build:.*/\" ",
+    "dev:style": "tailwindcss -i ./src/css/tailwind.css -o ./dist/style.css --watch",
+    "dev": "concurrently \"pnpm build:esm -w\" \"pnpm build:types-esm -w\" \"pnpm build:alias-esm -w\" \"pnpm build:style --watch\"",
+    "prebuild": "rimraf ./dist",
+    "postbuild": "rimraf ./**/*/tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.2"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.11.9",
+    "@swc/helpers": "^0.5.15",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "autoprefixer": "^10.4.21",
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwindcss": "^3",
+    "tsc-alias": "^1.8.11",
+    "typescript": "^5"
+  }
+}

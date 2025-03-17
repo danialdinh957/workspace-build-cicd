@@ -1,0 +1,23 @@
+{
+  "name": "workspace-build-cicd",
+  "private": true,
+  "scripts": {
+    "clean": "turbo run clean",
+    "dev": "turbo run dev",
+    "build": "turbo run build --filter=@danialdinh/test-ui-pkg",
+    "dev:next": "turbo run dev --filter=next-page-app --filter=@danialdinh/test-ui-pkg",
+    "versioning": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "author": "danialdinh957",
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "turbo": "^2.4.4"
+  },
+  "engines": {
+    "node": ">=20.16.0"
+  },
+  "packageManager": "pnpm@9.12.0"
+}
